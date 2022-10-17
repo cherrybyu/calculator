@@ -22,12 +22,17 @@ for (let i = 0; i < button.length; i++) {
 
 // displays selected numbers
 const number = document.querySelectorAll('div.number')
+let original = displayText.textContent
 for (let j = 0; j < number.length; j++) {
     number[j].addEventListener('click', function () {
-        displayText.textContent += number[j].textContent
+        original += number[j].textContent
+        let newDisplay = original.substring(original.length - 11, original.length)
+        displayText.textContent = newDisplay
     })
 }
 const clear = document.querySelector('#clear')
 clear.addEventListener('click', function () {
     displayText.textContent = ""
+    original = ""
 })
+
