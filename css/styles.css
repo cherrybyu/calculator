@@ -94,14 +94,15 @@ body {
     text-shadow: 0px 0px 10px #f500bd;
     border-radius: 8px;
     box-shadow: 1px 1px 3px #f500bca2;
+    cursor: default;
 }
 
 .hover {
-    text-shadow: 0px 0px 6px #f500bd;
+    text-shadow: 0px 0px 15px #f500bd;
     box-shadow: 1px 1px 2px #f500bcb5;
 }
 
 .clicked {
-    text-shadow: 0px 0px 10px #f500bd;
-    box-shadow: inset 0px 0px 3px #f500bcb8;
+    text-shadow: 0px 0px 2px #f500bd;
+    box-shadow: inset 0.5px 0.5px 3px #f500bcb8;
 }
