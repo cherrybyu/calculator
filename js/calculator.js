@@ -1,6 +1,8 @@
 const display = document.querySelector('.display')
 const button = document.querySelectorAll('div.button')
 let displayText = document.querySelector('.display-text')
+const body = document.querySelector('body')
+
 for (let i = 0; i < button.length; i++) {
 
     // button hover effects
@@ -30,6 +32,21 @@ for (let j = 0; j < number.length; j++) {
         displayText.textContent = newDisplay
     })
 }
+
+// keyboard support for number display
+const key = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+body.addEventListener('keydown', function (e) {
+    for (let index = 0; index < key.length; index++) {
+        let log = `${e.key}`;
+        if (key[index] == log) {
+            original += index
+            let newDisplay = original.substring(original.length - 11, original.length)
+            displayText.textContent = newDisplay
+        }
+    }
+})    
+
+// clears display
 const clear = document.querySelector('#clear')
 clear.addEventListener('click', function () {
     displayText.textContent = ""
