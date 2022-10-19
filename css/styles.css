@@ -1,15 +1,78 @@
 body {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: black;
     font-family: 'Varela Round', sans-serif;
-    height: 100vh;
+    min-height: 100vh;
+    gap: 20px;
 }
 
 @font-face {
     font-family: digital-7_monomono;
     src: url('Digital7Mono-B1g5.ttf');
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: digital-7_monomono;
+    font-size: 60px;
+    color: #00a0d58a;
+    text-shadow: .5px 4px 5px #00a0d58a;
+    background-color: #00a0d560;
+    padding: 16px 24px;
+    position: relative;
+    border-color: #00a0d500;
+    border-style: ridge;
+    border-radius: 8px;
+    box-shadow: 0px 8px 40px #00a1d5;
+}
+.result::after {
+    position: absolute;
+    content: "";
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(0.9) translateZ(0);
+    filter: blur(15px);
+    background: linear-gradient(
+    to left,
+    #00a0d56c,
+    #00a0d50b,
+    #00a0d50b,
+    #00a0d50b,
+    #00a0d529,
+    #00a0d539,
+    #00a0d515,
+    #00a0d50b,
+    #00a0d50b,
+    #00a0d50b,
+    #00a0d50b,
+    #00a0d55c,
+    #00a0d51e,
+    #00a0d50b,
+    #00a0d51b,
+    #00a0d50b,
+    #00a0d528
+    );
+    background-size: 200% 200%;
+    animation: animateGlow 3s linear infinite;
+}
+
+
+@keyframes animateGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
 }
 
 .container {
@@ -101,6 +164,24 @@ body {
     user-select: none;
 }
 
+.operator-button {
+    background-color: #001d31;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    color: #ff86c9;
+    text-shadow: 0px 0px 7px #f500bd;
+    border-radius: 8px;
+    box-shadow: 1px 1px 3px #f500bca2;
+    cursor: default;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .hover {
     text-shadow: 0px 0px 15px #f500bd;
     box-shadow: 1px 1px 2px #f500bcb5;
@@ -109,4 +190,15 @@ body {
 .clicked {
     text-shadow: 0px 0px 2px #f500bd;
     box-shadow: 0px 0px 0px;
+}
+
+.operator-click {
+    text-shadow: 0px 0px 2px #f500bd;
+    box-shadow: 0px 0px 0px;
+}
+
+.operator-clicked {
+    background-color: #f500bc51;
+    text-shadow: 0px 0px 4px #f500bd;
+    box-shadow: 1px 1px 3px #f500bd;
 }
