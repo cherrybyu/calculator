@@ -3,7 +3,7 @@ const button = document.querySelectorAll('div.button')
 let displayText = document.querySelector('.display-text')
 const body = document.querySelector('body')
 const resultContainer = document.querySelector('.result-container')
-
+let saveOperator
 let operation = []
 
 for (let i = 0; i < button.length; i++) {
@@ -22,17 +22,51 @@ for (let i = 0; i < button.length; i++) {
     })
     button[i].addEventListener('mouseup', function () {
         button[i].classList.remove('clicked')
-        //removeEffect()
+        removeEffect()
+        if (operation.length == 2) {
+            results(operation)
+            operation.push(original)
+            getSum(operation)
+        }
+        console.log(operation)
     })
 }
-/*
+
+
 function removeEffect() {
-    addition.classList.remove('operator-clicked')
-    addition.classList.remove('operator-click')
-    subtraction.classList.remove('operator-clicked')
-    subtraction.classList.remove('operator-click')
+    let op = document.querySelector('.operator-clicked')
+    if (op != null) {
+        op.classList.remove('operator-clicked')
+    }
 }
-*/
+
+function savedOperator () {
+    if (saveOperator == 'plus') {
+        operation.push(original)
+        results(operation)
+        getSum(operation)
+        console.log(saveOperator)
+    } else if (saveOperator == 'minus') {
+        operation.push(original)
+        results(operation)
+        getTotal(operation)
+    } else if (saveOperator == 'multiply') {
+        operation.push(original)
+        results(operation)
+        getProduct(operation)
+    } else if (saveOperator == 'divide') {
+        operation.push(original)
+        results(operation)
+        getQuotient(operation)
+    }
+}
+
+const equals = document.querySelector('#equal')
+equals.addEventListener('click', function() {
+    savedOperator()
+    //op.classList.remove('operator-clicked')
+})
+
 // displays selected numbers
 const number = document.querySelectorAll('div.number')
 let original = displayText.textContent
@@ -44,29 +78,59 @@ for (let j = 0; j < number.length; j++) {
     })
 }
 
+
+
 const operators = document.querySelectorAll('div.operator')
 for (let index = 0; index < operators.length; index++) {
     operators[index].addEventListener('mousedown', function () {
         operators[index].classList.add('operator-click')
     })
     operators[index].addEventListener('mouseup', function () {
+        operators[index].classList.remove('operator-click')
         operators[index].classList.add('operator-clicked')
         operation.push(original)
         original = ""
         console.log(operation)
 
         if (operators[index].textContent == '+') {
+            saveOperator = "plus"
             if (operation.length == 2) {
                 results(operation)
                 getSum(operation)
-                const result = document.querySelector('.result')
+            }
+        } else if (operators[index].textContent == '−') {
+            saveOperator = "minus"
+            if (operation.length == 2) {
+                results(operation)
+                getTotal(operation)
+            }
+        } else if (operators[index].textContent == '×') {
+            saveOperator = "multiply"
+            if (operation.length == 2) {
+                results(operation)
+                getProduct(operation)
+            }
+        }  else if (operators[index].textContent == '÷') {
+            saveOperator = "divide"
+            if (operation.length == 2) {
+                results(operation)
+                getQuotient(operation)
             }
         }
+        if (operation == 1) {
+            savedOperator()
+        }
+        //savedOperator()
     })
-    
 }
 
-
+function getTotal (operation) {
+    let total = parseFloat(operation[0]) - parseFloat(operation[1])
+    const result = document.querySelector('.result')
+    result.textContent = total
+    operation.splice(0, operation.length)
+    operation.push(total)
+}
 
 function getSum (operation) {
     let sum = parseFloat(operation[0]) + parseFloat(operation[1])
@@ -74,11 +138,26 @@ function getSum (operation) {
     result.textContent = sum
     operation.splice(0, operation.length)
     operation.push(sum)
-    //result.remove()
+}
+
+function getProduct (operation) {
+    let product = parseFloat(operation[0]) * parseFloat(operation[1])
+    const result = document.querySelector('.result')
+    result.textContent = product
+    operation.splice(0, operation.length)
+    operation.push(product)
+}
+
+function getQuotient (operation) {
+    let quotient = parseFloat(operation[0]) + parseFloat(operation[1])
+    const result = document.querySelector('.result')
+    result.textContent = quotient
+    operation.splice(0, operation.length)
+    operation.push(quotient)
 }
 
 // keyboard support for number display
-const keyNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const keyNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "."]
 const keyOperator = ['+', '-', '/', '*', '=']
 body.addEventListener('keydown', function (e) {
     for (let index = 0; index < keyNumber.length; index++) {
@@ -94,9 +173,7 @@ body.addEventListener('keydown', function (e) {
         let log = `${e.key}`;
         if (log == keyOperator[index]){
             //operation.push(original)
-            
         }
-        
     }*/
 })    
 
@@ -108,67 +185,20 @@ clear.addEventListener('click', function () {
     displayText.textContent = ""
     original = ""
     operation.splice(0, operation.length)
-    //const result = document.querySelector('.result')
-    //result.remove()
+    const result = document.querySelector('.result')
+    if (result != null) {
+       result.remove() 
+    }
 })
 
 
-function results (operation) {
+function results () {
     let result = document.querySelector('.result')
     if (result == null) {
         let result = document.createElement('div') 
         result.classList.add('result')
         resultContainer.appendChild(result)
+        displayText.textContent = ""
     } 
-    
-    //let sum = parseInt(operation[0]) + parseInt(operation[1])
-    //let total = parseInt(operation[0]) - parseInt(operation[1])
-    //result.textContent = sum
-    //result.textContent = total
-    console.log(operation)
 }
 
-/*
-
-const equals = document.querySelector('#equal') 
-equals.addEventListener('click', function () {
-    removeEffect()
-    operation.push(original)
-    results(operation)
-})
-
-
-
-const addition = document.querySelector('#add')
-addition.addEventListener('mousedown', function() {
-    addition.classList.add('operator-click')
-})
-addition.addEventListener('mouseup', function() {
-    addition.classList.add('operator-clicked')
-    operation.push(original)
-    original = ""
-    if (operation.length == 2) {
-        results(operation)
-        //let sum = eval(operation[0]) + eval(operation[1])
-        const result = document.querySelector('.result')
-        //result.textContent = sum
-    }
-})
-  
-
-const subtraction = document.querySelector('#subtract')
-subtraction.addEventListener('mousedown', function() {
-    subtraction.classList.add('operator-click')
-})
-subtraction.addEventListener('mouseup', function() {
-    subtraction.classList.add('operator-clicked')
-    operation.push(original)
-    original = ""
-    if (operation.length == 2) {
-        results(operation)
-        //let total = eval(operation[0]) - eval(operation[1])
-        const result = document.querySelector('.result')
-        //result.textContent = total
-    }
-})
-*/
