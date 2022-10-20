@@ -26,7 +26,6 @@ for (let i = 0; i < button.length; i++) {
         if (operation.length == 2) {
             results(operation)
             operation.push(original)
-            getSum(operation)
         }
         console.log(operation)
     })
@@ -67,6 +66,8 @@ equals.addEventListener('click', function() {
     //op.classList.remove('operator-clicked')
 })
 
+let numberClicked = document.querySelector('.number-clicked')
+
 // displays selected numbers
 const number = document.querySelectorAll('div.number')
 let original = displayText.textContent
@@ -75,10 +76,14 @@ for (let j = 0; j < number.length; j++) {
         original += number[j].textContent
         let newDisplay = original.substring(original.length - 11, original.length)
         displayText.textContent = newDisplay
+        if (numberClicked == null) {
+            number[j].classList.add('number-clicked')
+        } else {
+            number[j].classList.remove('number-clicked')
+            //number[j].classList.add('number-clicked')
+        }
     })
 }
-
-
 
 const operators = document.querySelectorAll('div.operator')
 for (let index = 0; index < operators.length; index++) {
@@ -93,36 +98,77 @@ for (let index = 0; index < operators.length; index++) {
         console.log(operation)
 
         if (operators[index].textContent == '+') {
+            if (saveOperator == "minus") {
+                results(operation)
+                getTotal(operation)
+            } else if (saveOperator == "multiply") {
+                results(operation)
+                getProduct(operation)
+            } else if (saveOperator == "divide") {
+                results(operation)
+                getQuotient(operation)
+            }
             saveOperator = "plus"
             if (operation.length == 2) {
                 results(operation)
                 getSum(operation)
             }
         } else if (operators[index].textContent == '−') {
+            if (saveOperator == "plus") {
+                results(operation)
+                getSum(operation)
+            } else if (saveOperator == "multiply") {
+                results(operation)
+                getProduct(operation)
+            } else if (saveOperator == "divide") {
+                results(operation)
+                getQuotient(operation)
+            }
             saveOperator = "minus"
             if (operation.length == 2) {
                 results(operation)
                 getTotal(operation)
             }
         } else if (operators[index].textContent == '×') {
+            if (saveOperator == "plus") {
+                results(operation)
+                getSum(operation)
+            } else if (saveOperator == "minus") {
+                results(operation)
+                getTotal(operation)
+            } else if (saveOperator == "divide") {
+                results(operation)
+                getQuotient(operation)
+            }
             saveOperator = "multiply"
             if (operation.length == 2) {
                 results(operation)
                 getProduct(operation)
             }
         }  else if (operators[index].textContent == '÷') {
+            if (saveOperator == "plus") {
+                results(operation)
+                getSum(operation)
+            } else if (saveOperator == "multiply") {
+                results(operation)
+                getProduct(operation)
+            } else if (saveOperator == "minus") {
+                results(operation)
+                getTotal(operation)
+            }
             saveOperator = "divide"
             if (operation.length == 2) {
                 results(operation)
                 getQuotient(operation)
             }
         }
+        /*
         if (operation == 1) {
             savedOperator()
-        }
-        //savedOperator()
+        */
     })
 }
+
 
 function getTotal (operation) {
     let total = parseFloat(operation[0]) - parseFloat(operation[1])
@@ -149,11 +195,18 @@ function getProduct (operation) {
 }
 
 function getQuotient (operation) {
-    let quotient = parseFloat(operation[0]) + parseFloat(operation[1])
-    const result = document.querySelector('.result')
-    result.textContent = quotient
-    operation.splice(0, operation.length)
-    operation.push(quotient)
+    if (operation[0] == 0 && operation[1] == 0) {
+        const result = document.querySelector('.result')
+        result.textContent = "ERROR"
+        return "ERROR"
+    } else {
+        let quotient = parseFloat(operation[0]) / parseFloat(operation[1])
+        const result = document.querySelector('.result')
+        result.textContent = quotient
+        operation.splice(0, operation.length)
+        operation.push(quotient)
+    }
+    
 }
 
 // keyboard support for number display
@@ -177,8 +230,6 @@ body.addEventListener('keydown', function (e) {
     }*/
 })    
 
-
-
 // clears display
 const clear = document.querySelector('#clear')
 clear.addEventListener('click', function () {
@@ -191,7 +242,6 @@ clear.addEventListener('click', function () {
     }
 })
 
-
 function results () {
     let result = document.querySelector('.result')
     if (result == null) {
@@ -201,4 +251,3 @@ function results () {
         displayText.textContent = ""
     } 
 }
-
